@@ -13,21 +13,21 @@ public class OCPBackground implements Background {
 	private static int maxRows;
 	private static int maxCols;
 	
-	private static Tile image;
+	private static Image image;
 	private static Image redSquare;
 	private static Image purpleSquare;
 	
 	private int[][] map = new int[][] { 
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
+		{1,1,1,1,1,1,1,1,1,0},
 	};
 	
 									
@@ -55,7 +55,13 @@ public class OCPBackground implements Background {
 		else if (map[row][col] == 1) {
 			image = purpleSquare;
 		}
-		return image;
+		
+		int x = (col * TILE_WIDTH);
+		int y = (row * TILE_HEIGHT);
+		
+		Tile newTile = new Tile(image, x, y, TILE_WIDTH, TILE_HEIGHT, false);
+		
+		return newTile;
 	}
 
 	@Override
