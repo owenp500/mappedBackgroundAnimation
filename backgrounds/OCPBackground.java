@@ -7,8 +7,8 @@ import javax.imageio.ImageIO;
 
 public class OCPBackground implements Background {
 
-	public static final int TILE_HEIGHT = 5;
-	public static final int TILE_WIDTH  = 5;
+	public static final int TILE_HEIGHT = 50;
+	public static final int TILE_WIDTH  = 50;
 	
 	private static int maxRows;
 	private static int maxCols;
@@ -18,16 +18,16 @@ public class OCPBackground implements Background {
 	private static Image purpleSquare;
 	
 	private int[][] map = new int[][] { 
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
-		{1,1,1,1,1,1,1,1,1,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
+		{0,0,0,1,1,0,0,0,0,0},
 	};
 	
 									
