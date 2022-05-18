@@ -7,8 +7,8 @@ import javax.imageio.ImageIO;
 
 public class OCPBackground implements Background {
 
-	public static final int TILE_HEIGHT = 50;
-	public static final int TILE_WIDTH  = 50;
+	public static final int TILE_HEIGHT = 75;
+	public static final int TILE_WIDTH  = 75;
 	
 	private static int maxRows;
 	private static int maxCols;
@@ -16,27 +16,30 @@ public class OCPBackground implements Background {
 	private static Image image;
 	private static Image redSquare;
 	private static Image purpleSquare;
+	private static Image bricks;
+	private static Image lava;
 	
 	private int[][] map = new int[][] { 
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
-		{0,0,0,1,1,0,0,0,0,0},
+		{1,1,1,1,1,1,1,1,1,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,1,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,1,0,0,1},
+		{1,0,0,0,0,0,1,1,0,1},
+		{1,1,1,1,1,1,1,1,1,1},
 	};
 	
 									
-	public ArrayList<DisplayableSprite> barriers = new ArrayList<DisplayableSprite>();
 	
 	public OCPBackground() {
 		try {
 			this.redSquare = ImageIO.read(new File("res/background/red.png"));
-			this.purpleSquare = ImageIO.read(new File("res.background/red.png"));
+			this.purpleSquare = ImageIO.read(new File("res/background/purple.png"));
+			this.bricks = ImageIO.read(new File("res/background/bricks.png"));
+			this.lava = ImageIO.read(new File("res/background/lava.png"));
 		}
 		catch(IOException e) {
 			
@@ -50,10 +53,10 @@ public class OCPBackground implements Background {
 			image = null;
 		}
 		else if (map[row][col] == 0) {
-			image = redSquare;
+			image = bricks;
 		}
 		else if (map[row][col] == 1) {
-			image = purpleSquare;
+			image = lava;
 		}
 		
 		int x = (col * TILE_WIDTH);
@@ -101,6 +104,14 @@ public class OCPBackground implements Background {
 	}
 
 	public ArrayList<DisplayableSprite> getBarriers() {
+		ArrayList<DisplayableSprite> barriers = new ArrayList<DisplayableSprite>();
+		for (int col = 0; col < map[0].length; col++) {
+			for (int row = 0; row < map.length; row++) {
+				if (map[row][col] == 1) {
+					barriers.add(new BarrierSprite(col * TILE_WIDTH, row * TILE_HEIGHT, (col + 1) * TILE_WIDTH, (row + 1) * TILE_HEIGHT, false));
+				}
+			}
+		}
 		return barriers;
 	}
 

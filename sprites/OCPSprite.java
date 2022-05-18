@@ -13,19 +13,22 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	private double milliSecondsPerFrame = 1000 / framesPerSecond;
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;	
-	
-	
-	private double centerX = 0;
-	private double centerY = 0;
+
+	private double centerX = 200;
+	private double centerY = 200;
 	private double height = 50;
 	private double width = 50;
 	private boolean dispose = false;
 	private boolean isAtExit = false;
 	private static String proximityMessage;
+	
+	
 	private double velocityX = 0;
 	private double velocityY = 0;
-	
 	private long score = 0;
+	
+	private final double VELOCITY = 200;
+	
 	public OCPSprite(int height, int width) {
 		
 		
@@ -34,7 +37,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 		
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
-				String filename = String.format("res/OCP/saw_%d.png" , frame);
+				String filename = String.format("res/OCP/saw_%d.png" , frame + 4);
 				
 				try {
 					frames[frame] = ImageIO.read(new File(filename));
@@ -116,41 +119,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	public void setDispose(boolean dispose) {
 		this.dispose = dispose;
 	}
-	
-	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
-		double deltaX = actual_delta_time * 0.001 * velocityX;
-		double deltaY = actual_delta_time * 0.001 * velocityY;
-		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
-		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
-		//boolean proximity = checkProximity(universe.getSprites(), deltaX, deltaY);
-		//boolean collidingCoin = checkCollisionWithCoin(universe.getSprites(), deltaX, deltaY);
-		//boolean atExit = checkIsAtExit(universe.getSprites(), deltaX,deltaY);
-		if (collidingBarrierX == false) {
-			this.centerX += actual_delta_time * 0.001 * velocityX;
-		}
-		if (collidingBarrierY == false) {
-			this.centerY += actual_delta_time * 0.001 * velocityY;
-		}
-		
-		/*if (atExit) {
-			isAtExit = true;
-		}
-		if (proximity) {
-			proximityMessage = "watch out";
-		}
-		else {
-			proximityMessage = "chillin";
-		}
-		*/
-		elapsedTime += actual_delta_time;
-		long elapsedFrames = (long) (elapsedTime / milliSecondsPerFrame);
-		currentFrame = (int) (elapsedFrames % FRAMES);		
-		
-		}
-		
-
-	
-	
+						
 	private boolean checkCollisionWithBarrier(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
 
 		//deltaX and deltaY represent the potential change in position
@@ -230,4 +199,56 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	public boolean getIsAtExit() {
 		return isAtExit;
 	}
+	
+	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+		double velocityX = 0;
+		double velocityY = 0;
+		
+		if (keyboard.keyDown(37)) {
+			velocityX = -VELOCITY;
+		}
+		//UP ARROW
+		if (keyboard.keyDown(38)) {
+			velocityY = -VELOCITY;			
+		}
+		//RIGHT ARROW
+		if (keyboard.keyDown(39)) {
+			velocityX += VELOCITY;
+		}
+		// DOWN ARROW
+		if (keyboard.keyDown(40)) {
+			velocityY += VELOCITY;			
+		}
+		
+		
+		double deltaX = actual_delta_time * 0.001 * velocityX;
+		double deltaY = actual_delta_time * 0.001 * velocityY;
+		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
+		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
+		//boolean proximity = checkProximity(universe.getSprites(), deltaX, deltaY);
+		//boolean collidingCoin = checkCollisionWithCoin(universe.getSprites(), deltaX, deltaY);
+		//boolean atExit = checkIsAtExit(universe.getSprites(), deltaX,deltaY);
+		if (collidingBarrierX == false) {
+			this.centerX += actual_delta_time * 0.001 * velocityX;
+		}
+		if (collidingBarrierY == false) {
+			this.centerY += actual_delta_time * 0.001 * velocityY;
+		}
+		
+		/*if (atExit) {
+			isAtExit = true;
+		}
+		if (proximity) {
+			proximityMessage = "watch out";
+		}
+		else {
+			proximityMessage = "chillin";
+		}
+		*/
+		
+		elapsedTime += actual_delta_time;
+		long elapsedFrames = (long) (elapsedTime / milliSecondsPerFrame);
+		currentFrame = (int) (elapsedFrames % FRAMES);		
+		
+		}
 }
