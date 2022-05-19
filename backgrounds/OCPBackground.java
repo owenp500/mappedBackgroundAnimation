@@ -17,19 +17,30 @@ public class OCPBackground implements Background {
 	private static Image redSquare;
 	private static Image purpleSquare;
 	private static Image bricks;
+	private static Image barrierBricks;
 	private static Image lava;
 	
-	private int[][] map = new int[][] { 
-		{1,1,1,1,1,1,1,1,1,1},
-		{1,0,0,0,0,0,0,0,0,1},
-		{1,0,0,1,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,1,0,0,1},
-		{1,0,0,0,0,0,1,1,0,1},
-		{1,1,1,1,1,1,1,1,1,1},
+	private int[][] map = new int[][] {
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,0,0,1,0,0,0,0,0,1,1,1,1,1,1},
+		{1,1,1,1,1,1,0,0,1,0,0,0,0,0,1,1,1,1,1,1},
+		{1,1,1,1,1,1,0,0,1,0,0,1,0,0,1,1,1,1,1,1},
+		{1,1,1,1,1,1,0,0,1,0,0,1,0,0,1,1,1,1,1,1},
+		{1,1,1,1,1,1,0,0,1,0,0,1,0,0,1,1,1,1,1,1},
+		{1,1,1,1,1,1,0,0,1,0,0,1,0,0,1,1,1,1,1,1},
+		{1,1,1,1,1,1,0,0,0,0,0,1,3,3,1,1,1,1,1,1},
+		{1,1,1,1,1,1,0,0,0,0,0,1,3,3,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 	};
 	
 									
@@ -40,6 +51,7 @@ public class OCPBackground implements Background {
 			this.purpleSquare = ImageIO.read(new File("res/background/purple.png"));
 			this.bricks = ImageIO.read(new File("res/background/bricks.png"));
 			this.lava = ImageIO.read(new File("res/background/lava.png"));
+			this.barrierBricks = ImageIO.read(new File("res/background/barrierBricks.png"));
 		}
 		catch(IOException e) {
 			
@@ -56,6 +68,9 @@ public class OCPBackground implements Background {
 			image = bricks;
 		}
 		else if (map[row][col] == 1) {
+			image = barrierBricks;
+		}
+		else if (map[row][col] == 3) {
 			image = lava;
 		}
 		

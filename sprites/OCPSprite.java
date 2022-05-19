@@ -14,8 +14,8 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;	
 
-	private double centerX = 200;
-	private double centerY = 200;
+	private double centerX = 500;
+	private double centerY = 500;
 	private double height = 50;
 	private double width = 50;
 	private boolean dispose = false;
