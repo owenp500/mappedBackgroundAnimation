@@ -22,6 +22,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	private boolean isAtExit = false;
 	private static String proximityMessage;
 	
+	private static double velocityYY;
 	
 	private double velocityX = 0;
 	private double velocityY = 0;
@@ -208,21 +209,19 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 			velocityX = -VELOCITY;
 		}
 		//UP ARROW
-		if (keyboard.keyDown(38)) {
-			velocityY = -VELOCITY;			
-		}
 		//RIGHT ARROW
 		if (keyboard.keyDown(39)) {
 			velocityX += VELOCITY;
 		}
 		// DOWN ARROW
 		if (keyboard.keyDown(40)) {
-			velocityY += VELOCITY;			
+			velocityYY = VELOCITY;			
 		}
 		
+		velocityYY += 23;
 		
 		double deltaX = actual_delta_time * 0.001 * velocityX;
-		double deltaY = actual_delta_time * 0.001 * velocityY;
+		double deltaY = actual_delta_time * 0.001 * velocityYY;
 		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
 		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
 		//boolean proximity = checkProximity(universe.getSprites(), deltaX, deltaY);
@@ -231,8 +230,17 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 		if (collidingBarrierX == false) {
 			this.centerX += actual_delta_time * 0.001 * velocityX;
 		}
+		else {
+			
+		}
 		if (collidingBarrierY == false) {
-			this.centerY += actual_delta_time * 0.001 * velocityY;
+			this.centerY += actual_delta_time * 0.001 * velocityYY;
+		}
+		else {
+			velocityYY = 0;
+			if (keyboard.keyDown(38)) {
+				velocityYY -= 1000;
+			}
 		}
 		
 		/*if (atExit) {
