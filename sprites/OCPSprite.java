@@ -14,21 +14,20 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;	
 
-	private double centerX = 500;
-	private double centerY = 500;
+	private double centerX = 200;
+	private double centerY = -100;
 	private double height = 50;
 	private double width = 50;
 	private boolean dispose = false;
 	private boolean isAtExit = false;
 	private static String proximityMessage;
 	
-	private static double velocityYY;
 	
 	private double velocityX = 0;
 	private double velocityY = 0;
 	private long score = 0;
 	
-	private final double VELOCITY = 200;
+	private final double ACCELERATION = 10;
 	
 	public OCPSprite(int height, int width) {
 		
@@ -202,26 +201,24 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	}
 	
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
-		double velocityX = 0;
-		double velocityY = 0;
+		double absVelocityX = Math.abs(velocityX);
 		
 		if (keyboard.keyDown(37)) {
-			velocityX = -VELOCITY;
+			velocityX += -ACCELERATION;
 		}
-		//UP ARROW
 		//RIGHT ARROW
 		if (keyboard.keyDown(39)) {
-			velocityX += VELOCITY;
+			velocityX += ACCELERATION;
 		}
 		// DOWN ARROW
 		if (keyboard.keyDown(40)) {
-			velocityYY = VELOCITY;			
-		}
-		
-		velocityYY += 23;
+			velocityY += ACCELERATION/10;			
+		}		
+		//constant downward y velocity for gravity
+		velocityY += 23;
 		
 		double deltaX = actual_delta_time * 0.001 * velocityX;
-		double deltaY = actual_delta_time * 0.001 * velocityYY;
+		double deltaY = actual_delta_time * 0.001 * velocityY;
 		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
 		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
 		//boolean proximity = checkProximity(universe.getSprites(), deltaX, deltaY);
@@ -234,12 +231,16 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 			
 		}
 		if (collidingBarrierY == false) {
-			this.centerY += actual_delta_time * 0.001 * velocityYY;
+			this.centerY += actual_delta_time * 0.001 * velocityY;
 		}
 		else {
-			velocityYY = 0;
+			if (velocityX != 0) {
+				velocityX -= ACCELERATION;
+			}
+			
+			velocityY = 0;
 			if (keyboard.keyDown(38)) {
-				velocityYY -= 1000;
+				velocityY -= 1000;
 			}
 		}
 		
