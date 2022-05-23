@@ -27,7 +27,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	private double velocityY = 0;
 	private long score = 0;
 	
-	private final double ACCELERATION = 10;
+	private final double ACCELERATION = 4;
 	
 	public OCPSprite(int height, int width) {
 		
@@ -203,16 +203,27 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		double absVelocityX = Math.abs(velocityX);
 		
+		
 		if (keyboard.keyDown(37)) {
-			velocityX += -ACCELERATION;
+			if (velocityX > 0) {
+				velocityX -= ACCELERATION * ACCELERATION;
+			}
+			else {
+				velocityX += -ACCELERATION;
+				}
 		}
 		//RIGHT ARROW
 		if (keyboard.keyDown(39)) {
-			velocityX += ACCELERATION;
+			if (velocityX < 0) {
+				velocityX += ACCELERATION * ACCELERATION;
+			}
+			else {
+				velocityX += ACCELERATION;
+			}
 		}
 		// DOWN ARROW
 		if (keyboard.keyDown(40)) {
-			velocityY += ACCELERATION/10;			
+			velocityY += 50;			
 		}		
 		//constant downward y velocity for gravity
 		velocityY += 23;
@@ -228,19 +239,19 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 			this.centerX += actual_delta_time * 0.001 * velocityX;
 		}
 		else {
-			
+			velocityX = 0;
 		}
 		if (collidingBarrierY == false) {
 			this.centerY += actual_delta_time * 0.001 * velocityY;
 		}
 		else {
 			if (velocityX != 0) {
-				velocityX -= ACCELERATION;
+				velocityX -= velocityX * velocityX / 999999;
 			}
 			
 			velocityY = 0;
 			if (keyboard.keyDown(38)) {
-				velocityY -= 1000;
+				velocityY -= 550;
 			}
 		}
 		
