@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.security.AccessControlException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -110,6 +111,12 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 		
 		return centerY;
 	}
+	public double getVelocityX() {
+		return velocityX;
+	}
+	public double getVelocityY() {
+		return velocityY;
+	}
 	
 	public boolean getDispose() {
 		
@@ -209,7 +216,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 				velocityX -= ACCELERATION * ACCELERATION;
 			}
 			else {
-				velocityX += -ACCELERATION;
+				velocityX += -ACCELERATION ;
 				}
 		}
 		//RIGHT ARROW
@@ -245,13 +252,13 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 			this.centerY += actual_delta_time * 0.001 * velocityY;
 		}
 		else {
-			if (velocityX != 0) {
-				velocityX -= velocityX * velocityX / 999999;
+			if (velocityX != 0 && (keyboard.keyDown(39) == false && keyboard.keyDown(37) == false)) {
+				velocityX -= (ACCELERATION * velocityX) / 125;
 			}
 			
 			velocityY = 0;
 			if (keyboard.keyDown(38)) {
-				velocityY -= 550;
+				velocityY -= 700;
 			}
 		}
 		
