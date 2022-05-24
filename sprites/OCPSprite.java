@@ -208,9 +208,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 	}
 	
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
-		double absVelocityX = Math.abs(velocityX);
-		
-		
+		//left arrow
 		if (keyboard.keyDown(37)) {
 			if (velocityX > 0) {
 				velocityX -= ACCELERATION * ACCELERATION;
@@ -255,7 +253,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 			if (velocityX != 0 && (keyboard.keyDown(39) == false && keyboard.keyDown(37) == false)) {
 				velocityX -= (ACCELERATION * velocityX) / 125;
 			}
-			
+			//up arrow (only works when on ground or ceiling)
 			velocityY = 0;
 			if (keyboard.keyDown(38)) {
 				velocityY -= 700;
@@ -269,7 +267,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 			proximityMessage = "watch out";
 		}
 		else {
-			proximityMessage = "chillin";
+			proximityMessage = "";
 		}
 		*/
 		
