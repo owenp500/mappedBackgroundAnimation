@@ -134,10 +134,7 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof BarrierSprite) {
-				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
-						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
-						sprite.getMinX(),sprite.getMinY(), 
-						sprite.getMaxX(), sprite.getMaxY())) {
+				if (CollisionDetection.pixelBasedOverlaps(this,sprite , deltaX, deltaY)) {
 					colliding = true;
 					break;					
 				}
