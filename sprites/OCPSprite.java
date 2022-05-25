@@ -132,9 +132,23 @@ public class OCPSprite implements DisplayableSprite, MovableSprite,CollidingSpri
 		//deltaX and deltaY represent the potential change in position
 		boolean colliding = false;
 
+		//this collision detection works correctly but has one bug where the sprite gets stuck when colliding with a corner in a specific way
+		/*
+		 * (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
+				this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+				sprite.getMinX(),sprite.getMinY(), 
+				sprite.getMaxX(), sprite.getMaxY())) {
+		*/
+		
+		//this collision detection doesn't work because the get height function returns a nullPointerException
+		/*(CollisionDetection.pixelBasedOverlaps(this,sprite , deltaX, deltaY)) {*/
+		
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof BarrierSprite) {
-				if (CollisionDetection.pixelBasedOverlaps(this,sprite , deltaX, deltaY)) {
+				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
+						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+						sprite.getMinX(),sprite.getMinY(), 
+						sprite.getMaxX(), sprite.getMaxY()))  {
 					colliding = true;
 					break;					
 				}
